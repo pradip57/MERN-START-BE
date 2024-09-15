@@ -35,9 +35,17 @@ const data = [
 
 const str_data = JSON.stringify(data);
 const filePath = "./users_data.json";
-
+//read and write file using fs
 fs.writeFileSync(filePath, str_data);
 
 const dataRead = fs.readFileSync(filePath,{encoding:"utf-8"});
 const arrayData = JSON.parse(dataRead)
 console.log(arrayData)
+
+
+//creating folder if it doesnot exists
+
+const path = "./uploads/images"
+if(!fs.existsSync(path)){
+  fs.mkdirSync(path,{recursive:true})
+}
