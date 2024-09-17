@@ -1,13 +1,8 @@
 const express = require("express");
+const mainRouter = require("./router.config");
 
 const app = express();
 
-app.use("/health", (req, res) => {
-  res.send("This is health");
-});
-
-app.use("/", (req, res) => {
-  res.send("This is main");
-});
+app.use("/api/v1",mainRouter);
 
 module.exports = app;
