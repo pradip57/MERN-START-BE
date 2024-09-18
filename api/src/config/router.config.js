@@ -1,17 +1,13 @@
 const express = require("express");
+const authRouter = require("../modules/auth/auth.router");
 
 const mainRouter = express.Router();
 
-mainRouter.get("/health", (req, res) => {
-  res.send("This is health");
+mainRouter.use("/health", (req, res) => {
+  res.send("This is health check success");
 });
 
-mainRouter.get("/done/:slug",(req,res)=>{
-    
-    const slug = req.params.slug
-    res.send(slug)
-    console.log(slug)
-})
+mainRouter.use("/auth",authRouter);
 
 mainRouter.use("/", (req, res) => {
   res.send("This is main page");
