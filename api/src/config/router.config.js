@@ -7,10 +7,6 @@ mainRouter.use("/health", (req, res) => {
   res.send("This is health check success");
 });
 
-mainRouter.use("/auth",authRouter);
-
-mainRouter.use("/", (req, res) => {
-  res.send("This is main page");
-});
+mainRouter.use("/auth", authRouter);
 
 module.exports = mainRouter;
