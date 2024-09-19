@@ -1,65 +1,23 @@
+const authCtrl = require("./auth.controller");
+
 const authRouter = require("express").Router();
 
 //registration
-authRouter.post("/register", (req, res, next) => {
-  const data = req.body;
-  console.log(req.body)
-  res.status(201).json({
-    result: data,
-    message: "This is register page",
-    meta: null,
-    status: "SUCCESS",
-  });
-});
+authRouter.post("/register", authCtrl.register);
 
 //activation
-authRouter.get("/activate/:token", (req, res, next) => {
-  res.status(200).json({
-    result: "",
-    message: "This is activation page",
-    meta: null,
-    status: "SUCCESS",
-  });
-});
+authRouter.get("/activate/:token", authCtrl.activate);
 
 //login
-authRouter.post("/login", (req, res, next) => {
-  res.status(200).json({
-    result: "",
-    message: "This is login page",
-    meta: null,
-    status: "SUCCESS",
-  });
-});
+authRouter.post("/login", authCtrl.login);
 
 //logout
-authRouter.delete("/logout", (req, res, next) => {
-  res.status(200).json({
-    result: "",
-    message: "Logout page",
-    meta: null,
-    status: "SUCCESS",
-  });
-});
+authRouter.delete("/logout", authCtrl.logout);
 
 //forget password
-authRouter.post("/forget-password", (req, res, next) => {
-  res.status(200).json({
-    result: "",
-    message: "This is forget password",
-    meta: null,
-    status: "SUCCESS",
-  });
-});
+authRouter.post("/forget-password", authCtrl.forgetPassword);
 
 //reset password
-authRouter.patch("/reset-password/:token", (req, res, next) => {
-  res.status(200).json({
-    result: "",
-    message: "This is reset password",
-    meta: null,
-    status: "SUCCESS",
-  });
-});
+authRouter.patch("/reset-password/:token", authCtrl.resetPassword);
 
 module.exports = authRouter;
