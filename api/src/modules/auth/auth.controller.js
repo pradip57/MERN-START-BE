@@ -1,8 +1,8 @@
 class AuthController {
-  register = (req, res, next) => {
+  register = async (req, res, next) => {
     try {
       const data = req.body;
-      console.log(req.body);
+
       res.status(201).json({
         result: data,
         message: "This is register page",
