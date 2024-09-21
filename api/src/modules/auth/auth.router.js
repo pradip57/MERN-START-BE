@@ -1,11 +1,12 @@
 const authCtrl = require("./auth.controller");
 const { registerDTO, loginDTO } = require("./auth.contract");
-const {bodyValidator} = require("../../middleware/validator.middleware")
+const {bodyValidator} = require("../../middleware/validator.middleware");
+const { setPath, uploader } = require("../../middleware/uploader.middleware");
 
 const authRouter = require("express").Router();
 
 //registration
-authRouter.post("/register",bodyValidator(registerDTO) ,authCtrl.register);
+authRouter.post("/register",setPath("users/"),uploader.single("image"),bodyValidator(registerDTO) ,authCtrl.register);
 
 //activation
 authRouter.get("/activate/:token", authCtrl.activate);

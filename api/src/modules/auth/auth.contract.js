@@ -11,7 +11,7 @@ const registerDTO = Joi.object({
   phone: Joi.string().required(),
   address: Joi.string().required(),
   role: Joi.string()
-    .regex(/^(customer|seller)$/)
+    .regex(/^(customer|seller|admin)$/)
     .required(),
 });
 
