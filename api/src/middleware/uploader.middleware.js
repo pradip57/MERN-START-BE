@@ -3,7 +3,7 @@ const multer = require("multer");
 const {
   generateRandomString,
   randomNumber,
-} = require("../services/randomstring");
+} = require("../utilities/helper");
 
 const setPath = (path) => {
   return (req, res, next) => {

@@ -1,7 +1,16 @@
+const { cloudFileUpload } = require("../../utilities/helper");
+const bcryptJs = require("bcryptjs");
+
 class AuthController {
   register = async (req, res, next) => {
     try {
       const data = req.body;
+      console.log(req.file);
+      if (req.file) {
+        data.image = await cloudFileUpload(req.file);
+      }
+      const passwordEncrypt = bcryptJs.hashSync(data.password, 10);
+      data.password = passwordEncrypt;
 
       res.status(201).json({
         result: data,
