@@ -1,9 +1,6 @@
 const fs = require("fs");
 const multer = require("multer");
-const {
-  generateRandomString,
-  randomNumber,
-} = require("../utilities/helper");
+const { generateRandomString, randomNumber } = require("../utilities/helper");
 
 const setPath = (path) => {
   return (req, res, next) => {
@@ -30,6 +27,26 @@ const myStorage = multer.diskStorage({
 
 const uploader = multer({
   storage: myStorage,
+  fileFilter: (req, file, cb) => {
+    const ext = file.originalname.split(".").pop();
+
+    if (["jpg", "jpeg", "png", "webp"].includes(ext.toLowerCase())) {
+      cb(null, true);
+    } else {
+      cb(
+        {
+          data: { image: "file format not supported" },
+          message: "Validation Failed",
+          status_code: 400,
+          status: "VALIDATION_FAILED",
+        },
+        false
+      );
+    }
+  },
+  limits: {
+    fileSize: 3000000, //3mb in bytes
+  },
 });
 
 module.exports = { uploader, setPath };

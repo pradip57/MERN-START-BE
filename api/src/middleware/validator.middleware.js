@@ -2,6 +2,7 @@ const bodyValidator = (schema) => {
   return async (req, res, next) => {
     try {
       const data = req.body;
+      console.log(data)
       await schema.validateAsync(data, { abortEarly: false });
       next();
     } catch (exception) {
