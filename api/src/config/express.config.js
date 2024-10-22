@@ -5,6 +5,8 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use('/imageson', express.static("./public/uploads"))
+
 app.use("/api/v1", mainRouter);
 
 app.use((req, res, next) => {

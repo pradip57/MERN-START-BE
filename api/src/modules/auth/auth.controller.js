@@ -1,4 +1,7 @@
-const { cloudFileUpload } = require("../../utilities/helper");
+const {
+  cloudFileUpload,
+  generateRandomString,
+} = require("../../utilities/helper");
 const bcryptJs = require("bcryptjs");
 
 class AuthController {
@@ -11,6 +14,8 @@ class AuthController {
       }
       const passwordEncrypt = bcryptJs.hashSync(data.password, 10);
       data.password = passwordEncrypt;
+      data.activationToken = generateRandomString(50);
+      data.tokenExpires = new Date(Date.now() + (60*60*3*1000))
 
       res.status(201).json({
         result: data,
