@@ -31,9 +31,28 @@ class MailServices {
     }
   }
 
-  mainSend = ({}) => {
+  mainSend = async ({ to, subject, message }) => {
     try {
-    } catch (exception) {}
+      const response = await this.transport.sendMail({
+        to: to,
+        from: process.env.SMTP_FROM,
+        subject: subject,
+        html: message,
+
+        // bcc,
+        // cc,
+        // attachments,
+      });
+      console.log(response);
+      return;
+    } catch (exception) {
+      console.log(exception);
+      throw {
+        message: "Error sending email",
+        data: exception,
+        status: "EMAIL_SENDING_ERROR",
+      };
+    }
   };
 }
 
