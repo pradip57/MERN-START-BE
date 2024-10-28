@@ -1,11 +1,13 @@
 const express = require("express");
 const mainRouter = require("./router.config");
+const { MulterError } = require("multer");
 
 const app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
-app.use('/imageson', express.static("./public/uploads"))
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+app.use("/imageson", express.static("./public/uploads"));
 
 app.use("/api/v1", mainRouter);
 
@@ -24,6 +26,13 @@ app.use((err, req, res, next) => {
   let message = err.message || "Internal Error .......";
   let status = err.status || "INTERNAL_SERVER_ERROR";
   let status_code = err.status_code || 500;
+
+  if (err instanceof MulterError) {
+    status_code = 400;
+    message = "Validation Failed";
+    //detect error and send in data field
+  }
+
   res.status(status_code).json({
     result: data,
     message: message,

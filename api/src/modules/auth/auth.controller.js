@@ -1,5 +1,7 @@
+const { myEvent, EventName } = require("../../middleware/events.middleware");
 const mailServ = require("../../services/mail.services");
 const {
+  removeFile,
   cloudFileUpload,
   generateRandomString,
 } = require("../../utilities/helper");
@@ -18,21 +20,13 @@ class AuthController {
       data.activationToken = generateRandomString(50);
       data.tokenExpires = new Date(Date.now() + 60 * 60 * 3 * 1000);
 
-      await mailServ.mainSend({
-        to: data.email,
-        subject: "Activate your account",
-        message: `Dear ${data.name}, <br>
-        <p>Your account has been succesfully created.Please click link below or copy paste the url to activate your account</p> <br/>
-        <a href = "${process.env.FRONTEND_URL}/activate/${data.activationToken}">
-        ${process.env.FRONTEND_URL}/activate/${data.activationToken}
-        </a>
-        <br/>
-        <p><strong>Note: </strong>Please donot reply to this email</p>
-        <p>Regards,</p>
-        <p>System Administration</p>
-        <p>${process.env.SMTP_FROM}</p>
-        `,
+      myEvent.emit(EventName.REGISTER_EMAIL, {
+        name: data.name,
+        email: data.email,
+        activationToken: data.activationToken,
       });
+
+      
 
       res.status(201).json({
         result: data,
@@ -41,6 +35,9 @@ class AuthController {
         status: "SUCCESS",
       });
     } catch (exception) {
+      if (req.file) {
+        removeFile(req.file.path);
+      }
       next(exception);
     }
   };
