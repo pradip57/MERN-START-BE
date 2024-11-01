@@ -13,7 +13,7 @@ myEvent.on(EventName.REGISTER_EMAIL, async (data) => {
       to: data.email,
       subject: "Activate your account",
       message: `Dear ${data.name}, <br>
-            <p>Your account has been succesfully created.Please click link below or copy paste the url to activate your account</p> <br/>
+            <p>Your account has been succesfully created.Please click link below or copy paste  url to activate your account</p> <br/>
             <a href = "${process.env.FRONTEND_URL}/activate/${data.activationToken}">
             ${process.env.FRONTEND_URL}/activate/${data.activationToken}
             </a>
