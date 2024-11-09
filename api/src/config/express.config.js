@@ -1,4 +1,7 @@
 const express = require("express");
+
+require("./db.config")
+
 const mainRouter = require("./router.config");
 const { MulterError } = require("multer");
 
